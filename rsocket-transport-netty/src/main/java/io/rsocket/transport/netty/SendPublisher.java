@@ -18,7 +18,15 @@ import reactor.core.CoreSubscriber;
 import reactor.core.Fuseable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Operators;
+import reactor.netty.FutureMono;
 import reactor.util.concurrent.Queues;
+
+import java.nio.channels.ClosedChannelException;
+import java.util.Queue;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
+import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
+import java.util.function.Function;
 
 class SendPublisher<V extends ReferenceCounted> extends Flux<ByteBuf> {
 
@@ -141,6 +149,9 @@ class SendPublisher<V extends ReferenceCounted> extends Flux<ByteBuf> {
 
     private InnerSubscriber(CoreSubscriber<? super ByteBuf> destination) {
       this.destination = destination;
+      FutureMono.from(channel.closeFuture())
+          .doFinally(s -> onError(new ClosedChannelException()))
+          .subscribe();
     }
 
     @Override
