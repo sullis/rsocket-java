@@ -1,5 +1,6 @@
 package io.rsocket.transport.netty;
 
+import io.github.nettyplus.leakdetector.junit.NettyLeakDetectorExtension;
 import io.rsocket.RSocket;
 import io.rsocket.SocketAcceptor;
 import io.rsocket.core.RSocketConnector;
@@ -12,11 +13,13 @@ import io.rsocket.util.EmptyPayload;
 import java.net.URI;
 import java.time.Duration;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import reactor.core.publisher.Flux;
 import reactor.netty.DisposableServer;
 import reactor.netty.http.server.HttpServer;
 import reactor.test.StepVerifier;
 
+@ExtendWith(NettyLeakDetectorExtension.class)
 public class WebSocketTransportIntegrationTest {
 
   @Test

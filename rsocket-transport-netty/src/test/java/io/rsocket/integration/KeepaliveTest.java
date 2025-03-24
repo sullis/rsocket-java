@@ -1,5 +1,6 @@
 package io.rsocket.integration;
 
+import io.github.nettyplus.leakdetector.junit.NettyLeakDetectorExtension;
 import io.rsocket.Payload;
 import io.rsocket.RSocket;
 import io.rsocket.core.RSocketClient;
@@ -16,6 +17,7 @@ import java.util.function.Function;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
@@ -30,6 +32,7 @@ import reactor.util.retry.RetryBackoffSpec;
  * Test case that reproduces the following <a
  * href="https://github.com/rsocket/rsocket-java/issues/1099">GitHub Issue</a>
  */
+@ExtendWith(NettyLeakDetectorExtension.class)
 public class KeepaliveTest {
 
   private static final Logger LOG = LoggerFactory.getLogger(KeepaliveTest.class);

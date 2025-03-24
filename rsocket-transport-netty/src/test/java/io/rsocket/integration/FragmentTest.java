@@ -18,6 +18,7 @@ package io.rsocket.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import io.github.nettyplus.leakdetector.junit.NettyLeakDetectorExtension;
 import io.rsocket.Payload;
 import io.rsocket.RSocket;
 import io.rsocket.core.RSocketConnector;
@@ -30,12 +31,14 @@ import io.rsocket.util.RSocketProxy;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@ExtendWith(NettyLeakDetectorExtension.class)
 public class FragmentTest {
   private RSocket handler;
   private CloseableChannel server;

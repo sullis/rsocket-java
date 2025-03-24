@@ -15,6 +15,7 @@
  */
 package io.rsocket.transport.netty;
 
+import io.github.nettyplus.leakdetector.junit.NettyLeakDetectorExtension;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -37,6 +38,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -47,6 +49,7 @@ import reactor.netty.http.client.HttpClient;
 import reactor.netty.http.server.HttpServer;
 import reactor.test.StepVerifier;
 
+@ExtendWith(NettyLeakDetectorExtension.class)
 public class WebsocketPingPongIntegrationTest {
   private static final String host = "localhost";
   private static final int port = 8088;
